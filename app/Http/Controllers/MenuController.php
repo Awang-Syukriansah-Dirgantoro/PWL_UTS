@@ -15,9 +15,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menu = Menu::all();
-        $list = Menu::orderBy('kode_barang','desc')->paginate(5);
-        return view('main.index',compact('menu','list'))->with('i',(request()->input('page',1)-1)*5);
+        $list = Menu::orderBy('kode_barang', 'desc')->paginate(5);
+        return view('main.index', compact('list'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -46,7 +45,7 @@ class MenuController extends Controller
             'qty' => 'required',
         ]);
         Menu::create($request->all());
-        return redirect()->route('menu.index')->with('success','Menu berhasil ditambahkan');
+        return redirect()->route('menu.index')->with('success', 'Menu berhasil ditambahkan');
     }
 
     /**
@@ -55,10 +54,9 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Menu $menu)
     {
-        $menu = Menu::find($id);
-        return view('main.detail',compact('menu'));
+        return view('main.detail', compact('menu'));
     }
 
     /**
@@ -67,10 +65,9 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Menu $menu)
     {
-        $menu = Menu::find($id);
-        return view('main.edit',compact('menu'));
+        return view('main.edit', compact('menu'));
     }
 
     /**
@@ -80,7 +77,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Menu $menu)
     {
         $request->validate([
             'kode_barang' => 'required',
@@ -89,8 +86,8 @@ class MenuController extends Controller
             'harga' => 'required',
             'qty' => 'required',
         ]);
-        Menu::find($id)->update($request->all());
-        return redirect()->route('menu.index')->with('success','Menu berhasil diupdate');
+        Menu::find($menu->id)->update($request->all());
+        return redirect()->route('menu.index')->with('success', 'Menu berhasil diupdate');
     }
 
     /**
@@ -99,15 +96,19 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Menu $menu)
     {
-        Menu::find($id)->delete();
-        return redirect()->route('menu.index')->with('success','Menu berhasil  dihapus');
+        $menu->delete();
+        return redirect()->route('menu.index')->with('success', 'Menu berhasil  dihapus');
     }
 
     public function cari(Request $request)
-	{
-		$menu = Menu::where('id',$request->id)->first();
-        return view('main.cari',compact('menu'));
-	}
+    {
+        $object = $request->cari;
+        $menu = Menu::where('kode_barang', 'like', $object . '%')
+        ->orWhere('nama_barang', 'like', $object . '%')
+        ->orWhere('kategori_barang', 'like', $object . '%')
+        ->get();
+        return view('main.cari', compact('menu'));
+    }
 }

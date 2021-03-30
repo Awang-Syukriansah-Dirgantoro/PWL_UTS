@@ -10,24 +10,24 @@
             </div>
         </div>
     </div>
-    <br>
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}
-            </p>
-        </div>
-    @endif
     <form method="post" action="{{ url('cari') }}" id="myForm">
         @csrf
         <div class="form-group">
-            <label for="id">Cari</label>
-            <input type="text" name="id" class="form-control" id="id" aria-describedby="id"
-                placeholder="Cari bedasarkan id">
+            <label for="kode_barang">Cari</label>
+            <input type="text" name="cari" class="form-control" id="kode_barang" aria-describedby="kode_barang"
+                placeholder="Cari Berdasarkan Kode Barang">
         </div>
         <button type="submit" class="btn btn-success mt-3">
             cari
         </button>
     </form>
+    <br>
+    @if (session('success'))
+        <div class="alert alert-success">
+            <p>{{ session('success') }}
+            </p>
+        </div>
+    @endif
     <table class="table table-bordered">
 
         <tr>
@@ -49,10 +49,8 @@
                 <td>{{ $menu->qty }}</td>
                 <td>
                     <form action="{{ route('menu.destroy', ['menu' => $menu->id]) }}" method="POST">
-                        <a class="btn btn-info"
-                            href="{{ route('menu.show', ['menu' => $menu->id]) }}">Show</a>
-                        <a class="btn btn-primary"
-                            href="{{ route('menu.edit', ['menu' => $menu->id]) }}">Edit</a>
+                        <a class="btn btn-info" href="{{ route('menu.show', ['menu' => $menu->id]) }}">Show</a>
+                        <a class="btn btn-primary" href="{{ route('menu.edit', ['menu' => $menu->id]) }}">Edit</a>
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>

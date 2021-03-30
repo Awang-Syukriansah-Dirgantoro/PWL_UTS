@@ -9,11 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Menu extends Model
 {
-    protected $table = "menus";
-    public $timestamps = false;
-    protected $primaryKey = 'id';
-    protected $guarded = ['id']; 
-    protected $incerement = false;
+    protected $guarded = ['id'];
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +17,7 @@ class Menu extends Model
      * @var array
      */
 
-    protected $fillabel = [
-        'id',
+    protected $fillable = [
         'kode_barang',
         'nama_barang',
         'kategori_barang',

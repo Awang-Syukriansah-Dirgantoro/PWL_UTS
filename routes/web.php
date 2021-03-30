@@ -20,3 +20,4 @@ Route::get('/', function () {
 });
 
 Route::resource('menu', MenuController::class);
+Route::post('cari',[MenuController::class,'cari']);
