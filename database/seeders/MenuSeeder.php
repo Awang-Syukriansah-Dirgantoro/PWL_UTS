@@ -15,11 +15,12 @@ class MenuSeeder extends Seeder
     public function run()
     {
         DB::table('menus')->insert([
+            'id' => '1',
             'kode_barang' => 'BRG01',
             'nama_barang' => 'Bakso',
             'kategori_barang' => 'makanan',
-            'harga' => '5000',
-            'qty' => '100'
+            'harga' => 5000,
+            'qty' => 100
         ]);
     }
 }

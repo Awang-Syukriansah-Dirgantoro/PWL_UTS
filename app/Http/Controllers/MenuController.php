@@ -46,7 +46,7 @@ class MenuController extends Controller
             'qty' => 'required',
         ]);
         Menu::create($request->all());
-        return redirect()->route('main.index')->with('success','Menu berhasil ditambahkan');
+        return redirect()->route('menu.index')->with('success','Menu berhasil ditambahkan');
     }
 
     /**
@@ -90,7 +90,7 @@ class MenuController extends Controller
             'qty' => 'required',
         ]);
         Menu::find($id)->update($request->all());
-        return redirect()->route('main.index')->with('success','Menu berhasil diupdate');
+        return redirect()->route('menu.index')->with('success','Menu berhasil diupdate');
     }
 
     /**
@@ -102,7 +102,7 @@ class MenuController extends Controller
     public function destroy($id)
     {
         Menu::find($id)->delete();
-        return redirect()->route('main.index')->with('success','Menu berhasil  dihapus');
+        return redirect()->route('menu.index')->with('success','Menu berhasil  dihapus');
     }
 
     public function cari(Request $request)
